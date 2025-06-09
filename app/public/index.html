@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Employee Management</title>
+</head>
+<body>
+  <h1>Employee Management</h1>
+
+  <form id="employee-form">
+    <input type="text" id="name" placeholder="Employee Name" required />
+    <input type="text" id="role" placeholder="Employee Role" required />
+    <button type="submit">Add Employee</button>
+  </form>
+
+  <h2>Employees List</h2>
+  <ul id="employees-list"></ul>
+
+  <script>
+    const form = document.getElementById('employee-form');
+    const employeesList = document.getElementById('employees-list');
+
+    // Fetch employees and display
+    async function fetchEmployees() {
+      const res = await fetch('/employees');
+      const employees = await res.json();
+      employeesList.innerHTML = '';
+      employees.forEach(emp => {
+        const li = document.createElement('li');
+        li.textContent = `${emp.name} (${emp.role}) — ID: ${emp.id}`;
+        employeesList.appendChild(li);
+      });
+    }
+
+    // On form submit, add employee and refresh list
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const role = document.getElementById('role').value.trim();
+
+      if (!name || !role) return alert('Please fill all fields.');
+
+      await fetch('/employees', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, role }),
+      });
+
+      form.reset();
+      fetchEmployees();
+    });
+
+    // Initial load
+    fetchEmployees();
+  </script>
+</body>
+</html>
