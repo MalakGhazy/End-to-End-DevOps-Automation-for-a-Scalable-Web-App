@@ -23,3 +23,10 @@ module "myalb" {
   security_group_id = module.mynetwork.aws_security_group["Public-SG"]
   instance_ids = { for name, id in module.myec2.instance_ids : name => id if contains(["Nodejs-app1", "Nodejs-app2"], name) }
 }
+
+module "dynamodb" {
+    source = "./dynamodb"
+    table_name = "Employees"
+    hash_key = "id"
+    environment = "dev"
+}

@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket = "my-devops-project-tf-state"
+    bucket = "nodejs-bucket-malak"
     key = "terraform.tfstate"
     region = "us-east-1"
-    profile = "default"
+    profile = "malak-terraform"
     encrypt = true
     use_lockfile = true
   }

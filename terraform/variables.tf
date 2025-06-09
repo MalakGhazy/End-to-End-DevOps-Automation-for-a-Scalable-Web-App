@@ -4,7 +4,7 @@ variable region {
 }
 variable profile {
     type = string
-    default = "default"
+    default = "malak-terraform"
 }
 variable instance_type {
     type = string
