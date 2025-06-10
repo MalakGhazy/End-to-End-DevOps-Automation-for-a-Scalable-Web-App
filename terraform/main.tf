@@ -30,3 +30,7 @@ module "dynamodb" {
     hash_key = "id"
     environment = "dev"
 }
+
+module "ecr" {
+    source = "./ECR"
+}
